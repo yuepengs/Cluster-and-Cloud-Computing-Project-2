@@ -1,0 +1,7 @@
+tweepy==3.10.0
+pandas==1.4.1
+couchdb==1.2
+json5==0.9.5
+textblob==0.17.1
+nltk==3.6.1
+shapely==1.8.1.post1
