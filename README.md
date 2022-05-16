@@ -2,9 +2,9 @@
 Here is the tutorial of running the cloud-based twitter analysis system.
 Before you start, please install the Ansible first.
 https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
-# YouTube Link
+## YouTube Link
 https://www.youtube.com/watch?v=aDL3_g_Wqx8
-
+## Setting & Coding part
 Once the Ansible is installed, navigate to /mrc and do the following steps 
 1. Create instances on MRC
     Download the openrc file from MRC and make sure it is in the directory
