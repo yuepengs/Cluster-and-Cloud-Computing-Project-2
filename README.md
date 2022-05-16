@@ -1,7 +1,6 @@
 # Cluster and Cloud Computing Project-2
 
-Group Members:
-- Team 22
+Team 22 Group Members:
 - Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
 - Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
 - Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
