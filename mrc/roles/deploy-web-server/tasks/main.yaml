@@ -1,0 +1,21 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+
+- name: start web server container
+  become: yes
+  docker_container:
+    name: nodejs
+    image: "ccca2/web:new"
+    state: started
+    ports:
+      - "5984:5984"
+      - "9100-9200:9100-9200"
+      - "4369:4369"
+      - "80:8000"
+    volumes:
+      - /home/ubuntu/COMP90024
+    pull: yes

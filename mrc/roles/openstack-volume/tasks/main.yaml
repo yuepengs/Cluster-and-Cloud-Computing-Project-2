@@ -1,0 +1,28 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+
+---
+# Create volumes from vars
+- name: Create volume(s) on NeCTAR
+  openstack.cloud.volume:
+    display_name: '{{ item.vol_name }}'
+    size: '{{ item.vol_size }}'
+    availability_zone: '{{ availability_zone }}'
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ volumes }}'
+  register: os_vol
+
+# Get a list of volume Ids from the return value of os_volume
+- name: Create a list of volume Ids
+  ansible.builtin.set_fact:
+    os_vol_ids: '{{ os_vol_ids|default([]) + [ item.id ] }}'
+  loop: '{{ os_vol.results }}'
+
+- ansible.builtin.debug:
+    msg: "Volume {{ os_vol_ids }} has been created."

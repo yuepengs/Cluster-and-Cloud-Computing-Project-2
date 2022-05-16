@@ -1,0 +1,22 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+---
+# Show all available Openstack images (just for demo, you don't need this task to create instance) 
+- name: Retrieve all available Openstack images
+  openstack.cloud.image_info:
+  register: image_result
+
+- name: Get image names and Ids
+  ansible.builtin.set_fact:
+    image_facts: "{{ image_facts|default([]) + [ {'name': item.name, 'id': item.id} ] }}"
+  loop: '{{ image_result.openstack_image }}'
+  when: item.name is defined
+
+- name: Show images
+  ansible.builtin.debug:
+    msg: "Image name: {{ item.name }}; Image id: {{ item.id }}"
+  loop: '{{ image_facts }}'

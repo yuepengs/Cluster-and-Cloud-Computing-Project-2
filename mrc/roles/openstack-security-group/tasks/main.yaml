@@ -1,0 +1,33 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+---
+# Create a security group
+- name: Create a security group
+  openstack.cloud.security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ security_groups }}'
+
+- name: Create a list of security group names
+  ansible.builtin.set_fact:
+    sg_names: '{{ sg_names|default([]) + [ item.name ] }}'
+  loop: '{{ security_groups }}'
+
+- ansible.builtin.debug:
+    msg: "Security group(s) {{ sg_names }} have been created."
+
+# Create security group rules
+- name: Create security group rules
+  openstack.cloud.security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ item.remote_ip_prefix }}'
+    state: present
+  loop: '{{ security_groups }}'
