@@ -1,0 +1,46 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+
+---
+# Create an instance on NeCTAR
+- name: Create an instance
+  openstack.cloud.server:
+    name: '{{ item.name }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name }}'
+    flavor: '{{ item.flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ item.volumes }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ instances }}'
+  register: os_instance
+
+- ansible.builtin.debug:
+    msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
+  loop: '{{ os_instance.results }}'
+  when: item.openstack is defined
+
+- name: Wait for connection
+  ansible.builtin.wait_for:
+    host: "{{ item.openstack.public_v4 }}"
+    port: 22
+    timeout: 120
+    search_regex: OpenSSH
+  loop: '{{ os_instance.results }}'
+  when: item.openstack is defined
+
+# Add hosts to Ansible in-memory inventory
+- name: Add host
+  ansible.builtin.add_host:
+    name: '{{ item.openstack.public_v4 }}'
+    groups: COMP90024
+  loop: '{{ os_instance.results }}'
+  when: item.openstack is defined

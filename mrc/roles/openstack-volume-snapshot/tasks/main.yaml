@@ -1,0 +1,18 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+---
+# Create volume snapshot(s) (for demo only, you don't need this unless you want to)
+- name: Create volume snapshot(s)
+  openstack.cloud.volume_snapshot:
+    state: present
+    volume: '{{ item.vol_name }}'
+    display_name: "{{ item.vol_name }}-{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M-%S') }}"
+    wait: yes
+    timeout: 600
+    force: yes
+    availability_zone: '{{ availability_zone }}'
+  loop: '{{ volumes }}'

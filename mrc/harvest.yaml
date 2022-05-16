@@ -1,0 +1,16 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+- hosts: masternode
+  vars_files:
+    - host_vars/nectar.yaml
+  vars:
+    - ansible_user: ubuntu
+    - ansible_ssh_private_key_file: ./shared.pem
+    - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  roles:
+    - role: deploy-data
+    

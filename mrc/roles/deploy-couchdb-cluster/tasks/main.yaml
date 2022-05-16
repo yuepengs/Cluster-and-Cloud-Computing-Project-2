@@ -1,0 +1,55 @@
+#Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+#Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+#Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+#Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+#Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+
+---
+- name: 1. add nodes
+  become: yes
+  uri:
+    url: http://{{masternode}}:5984/_cluster_setup
+    status_code: 201
+    method: POST
+    user: "{{ couchdb_user }}"
+    password:  "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"action\": \"enable_cluster\", \"bind_address\":\"0.0.0.0\",\
+             \"username\": \"{{ couchdb_user }}\", \"password\":\"{{ couchdb_password }}\", \"port\": \"5984\",\
+             \"remote_node\": \"{{ item }}\", \"node_count\":\"3\",\
+             \"remote_current_user\":\"{{ couchdb_user }}\", \"remote_current_password\":\"{{ couchdb_password }}\"}"
+    headers:
+      Content-Type: "application/json"
+  loop: "{{dbnodes}}"
+
+- name: 2. join nodes
+  become: yes
+  uri:
+    url: http://{{masternode}}:{{ couchdb_port }}/_cluster_setup
+    status_code: 201,409
+    method: POST
+    user: "{{ couchdb_user }}"
+    password:  "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"action\": \"add_node\", \"host\":\"{{ item }}\",\
+             \"port\": \"{{ couchdb_port }}\", \"username\": \"{{ couchdb_user }}\", \"password\":\"{{ couchdb_password }}\"}"
+    headers:
+      Content-Type: "application/json"
+  loop: "{{dbnodes}}"
+
+- name: 3. start couchdb cluster
+  become: yes
+  uri:
+    url: http://{{masternode}}:5984/
+    status_code: 200,201,409
+    method: GET
+    user: "{{ couchdb_user }}"
+    password:  "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    
