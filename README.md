@@ -1,10 +1,18 @@
-# Cluster-and-Cloud-Computing-Project-2[README.md]
+# Cluster and Cloud Computing Project-2
+
+Group Members:
+- Team 22
+- Zizhao Li (1267416) zizhaol2@student.unimelb.edu.au (Suzhou, China)
+- Fu Zhu (1166186) fuzhu@student.unimelb.edu.au (Melbourne, Australia)
+- Chuting Wang (1074511) chutingw@student.unimelb.edu.au (Xi’an, China)
+- Xuezhu Wu (938808) xuezhuw@student.unimelb.edu.au (Hangzhou, China)
+- Yuepeng Sheng (1048382) yuepengs@student.unimelb.edu.au (Shanghai, China)
+
+# Description
 Here is the tutorial of running the cloud-based twitter analysis system.
 Before you start, please install the Ansible first.
 https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
-## YouTube Link
-https://www.youtube.com/watch?v=aDL3_g_Wqx8
-## Setting & Coding part
+
 Once the Ansible is installed, navigate to /mrc and do the following steps 
 1. Create instances on MRC
     Download the openrc file from MRC and make sure it is in the directory
@@ -34,3 +42,6 @@ Once the Ansible is installed, navigate to /mrc and do the following steps
  6. Deploy the web server
 
     run ./run-web-server.sh
+
+# YouTube Link
+https://www.youtube.com/watch?v=aDL3_g_Wqx8
